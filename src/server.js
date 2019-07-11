@@ -1,15 +1,27 @@
 require('dotenv-flow').config()
 
 const fastify = require('fastify')
-const apiRoutes = require('./api/routes')
+const axios = require('axios')
 
 const loggerLevel = process.env.NODE_ENV !== 'production' ? 'debug' : 'info'
 const server = fastify({ ignoreTrailingSlash: true, logger: { level: loggerLevel } })
 
-server.register(apiRoutes, { prefix: '/api' })
-
 server.get('/', async () => {
   return { iam: '/' }
+})
+
+server.post('/watch', async (req) => {
+  const { url, cssSelectors, interval } = req.body
+  try {
+    const res = await axios.post(`${process.env.WATCH_SCHEDULER_ADDRESS}/watch`, {
+      interval,
+      payload: { url, cssSelectors }
+    })
+    return { success: res.data }
+  } catch (err) {
+    req.log.error(err.message)
+    return { success: false }
+  }
 })
 
 const start = async () => {
