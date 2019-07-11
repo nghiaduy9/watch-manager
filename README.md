@@ -16,6 +16,10 @@ $ yarn start # yarn dev for development
 
 ## DOCUMENTATION
 
+### Environment Variables
+
+- `SCHEDULER_ADDRESS` (string): Address of scheduler service
+
 ### Routes
 
 #### GET `/`
@@ -24,7 +28,7 @@ $ yarn start # yarn dev for development
 
 ##### Response body
 
-- iam: `"/"`
+- `iam`: `"/"`
 
 #### POST `/watch`
 
@@ -32,10 +36,10 @@ $ yarn start # yarn dev for development
 
 ##### Request body
 
-- interval (positive integer): Number of seconds between executions
-- url (string): URL to crawl
-- cssSelectors (object): Mapping from CSS selectors to their types. Currently, only "string" is a valid type.
+- `interval` (positive integer): Number of seconds between executions
+- `url` (string): URL to crawl
+- `cssSelectors` (object): Mapping from CSS selectors to their types. Currently, only "string" is a valid type.
 
 ##### Response body
 
-- success (boolean): Status
+- `success` (boolean): Status

@@ -13,7 +13,7 @@ server.get('/', async () => {
 server.post('/watch', async (req) => {
   const { url, cssSelectors, interval } = req.body
   try {
-    const res = await axios.post(`${process.env.WATCH_SCHEDULER_ADDRESS}/watch`, {
+    const res = await axios.post(`${process.env.SCHEDULER_ADDRESS}/watch`, {
       interval,
       payload: { url, cssSelectors }
     })
