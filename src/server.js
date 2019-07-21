@@ -10,17 +10,17 @@ server.get('/', async () => {
   return { iam: '/' }
 })
 
-server.post('/watch', async (req) => {
+server.post('/watch', async (req, res) => {
   const { url, cssSelectors, interval } = req.body
   try {
-    const res = await axios.post(`${process.env.SCHEDULER_ADDRESS}/watch`, {
+    const { status } = await axios.post(`${process.env.SCHEDULER_ADDRESS}/watch`, {
       interval,
       payload: { url, cssSelectors }
     })
-    return { success: res.data }
+    res.code(status)
   } catch (err) {
     req.log.error(err.message)
-    return { success: false }
+    res.code(500)
   }
 })
 
