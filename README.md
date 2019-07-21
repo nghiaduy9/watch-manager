@@ -39,7 +39,3 @@ $ yarn start # yarn dev for development
 - `interval` (positive integer): Number of seconds between executions
 - `url` (string): URL to crawl
 - `cssSelectors` (object): Mapping from CSS selectors to their types. Currently, only "string" is a valid type.
-
-##### Response body
-
-- `success` (boolean): Status
