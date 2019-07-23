@@ -10,7 +10,7 @@ server.get('/', async () => {
   return { iam: '/' }
 })
 
-server.post('/watch', async (req, res) => {
+server.post('/', async (req, res) => {
   const { url, cssSelectors, interval } = req.body
   try {
     const { status } = await axios.post(`${process.env.SCHEDULER_ADDRESS}/watch`, {

@@ -32,7 +32,7 @@ $ yarn start # yarn dev for development
 
 - `iam`: `"/"`
 
-#### POST `/watch`
+#### POST `/`
 
 > Add a new watch
 
