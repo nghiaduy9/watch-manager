@@ -1,4 +1,4 @@
-# Night Watch app server
+# Night Watch watch management
 
 ## INSTALLATION
 
@@ -18,6 +18,8 @@ $ yarn start # yarn dev for development
 
 ### Environment Variables
 
+- `NODE_ENV` (string): "development" or "production" environment
+- `PORT` (number): Port number to run the server
 - `SCHEDULER_ADDRESS` (string): Address of scheduler service
 
 ### Routes

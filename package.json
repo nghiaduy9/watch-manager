@@ -1,10 +1,10 @@
 {
   "private": true,
-  "name": "@night-watch-project/app-server",
-  "description": "Night Watch app server",
+  "name": "@night-watch-project/watch-management",
+  "description": "Night Watch watch management",
   "author": "Night Watch Project",
   "license": "MIT",
-  "repository": "github:night-watch-project/app-server",
+  "repository": "github:night-watch-project/watch-management",
   "version": "0.0.1",
   "main": "src/server.js",
   "scripts": {
