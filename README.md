@@ -1,4 +1,4 @@
-# Night Watch watch management
+# Night Watch watch manager
 
 ## INSTALLATION
 

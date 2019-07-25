@@ -1,10 +1,10 @@
 {
   "private": true,
-  "name": "@night-watch-project/watch-management",
-  "description": "Night Watch watch management",
+  "name": "@night-watch-project/watch-manager",
+  "description": "Night Watch watch manager",
   "author": "Night Watch Project",
   "license": "MIT",
-  "repository": "github:night-watch-project/watch-management",
+  "repository": "github:night-watch-project/watch-manager",
   "version": "0.0.1",
   "main": "src/server.js",
   "scripts": {
