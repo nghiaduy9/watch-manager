@@ -5,7 +5,7 @@
   "author": "Night Watch Project",
   "license": "MIT",
   "repository": "github:night-watch-project/watch-manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "src/server.js",
   "scripts": {
     "clean": "rm -r yarn.lock node_modules",
@@ -18,6 +18,6 @@
     "fastify": "^2.8.0"
   },
   "devDependencies": {
-    "eslint": "^6.3.0"
+    "eslint": "^6.4.0"
   }
 }
