@@ -22,6 +22,24 @@ $ yarn start # yarn dev for development
 - `PORT` (number): Port number to run the server
 - `SCHEDULER_ADDRESS` (string): Address of scheduler service
 
+### Database (MongoDB)
+
+#### Watch schema
+
+- `_id` (ObjectId): Unique ID
+- `userID` (ObjectId): ID of the user to whom this watch belongs
+- `url` (string): URL to crawl
+- `interval` (positive integer): Number of seconds between executions
+- `targets` (object[]): Array of target objects
+  - `name` (string): Unique name
+  - `cssSelector` (string): CSS selector
+  - `type` (string): Type of the data. Currently, only "string" is a valid type
+  - `data` (string): Current value
+  - `updatedAt` (Date): Time at which the data was last updated
+- `active` (boolean): Being scheduled or not
+- `createdAt` (Date): Time at which the user was created
+- `updatedAt` (Date): Time at which the user was last updated
+
 ### Routes
 
 #### GET `/`
@@ -38,6 +56,10 @@ $ yarn start # yarn dev for development
 
 ##### Request body
 
-- `interval` (positive integer): Number of seconds between executions
+- `userID` (ObjectId): ID of the user to whom this watch belongs
 - `url` (string): URL to crawl
-- `cssSelectors` (object): Mapping from CSS selectors to their types. Currently, only "string" is a valid type.
+- `interval` (positive integer): Number of seconds between executions
+- `targets` (object[]): Array of target objects
+  - `name` (string): Unique name
+  - `cssSelector` (string): CSS selector
+  - `type` (string): Type of the data. Currently, only "string" is a valid type
