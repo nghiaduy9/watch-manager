@@ -21,12 +21,14 @@ $ yarn start # yarn dev for development
 - `NODE_ENV` (string): "development" or "production" environment
 - `PORT` (number): Port number to run the server
 - `SCHEDULER_ADDRESS` (string): Address of scheduler service
+- `MONGODB_URI` (string): MongoDB URI
+- `MONGODB_DB_NAME` (string): Database name
 
 ### Database (MongoDB)
 
-#### Watch schema
+#### Watch schema ("watches" collection)
 
-- `_id` (ObjectId): Unique ID
+- `_id` (ObjectId): Auto-generated ID
 - `userID` (ObjectId): ID of the user to whom this watch belongs
 - `url` (string): URL to crawl
 - `interval` (positive integer): Number of seconds between executions
