@@ -65,3 +65,32 @@ $ yarn start # yarn dev for development
   - `name` (string): Unique name
   - `cssSelector` (string): CSS selector
   - `type` (string): Type of the data. Currently, only "string" is a valid type
+
+#### GET `/:id`
+
+> Get all information of a watch
+
+##### Route parameters
+
+- `id` (string): ID of the watch
+
+##### Response body
+
+See [Watch schema](#watch-schema-watches-collection).
+
+#### PUT `/:id/targets`
+
+> Update targets information of a watch
+
+##### Route parameters
+
+- `id` (string): ID of the watch
+
+##### Request body
+
+Array of objects
+
+- `name` (string): Unique name
+- `cssSelector` (string): CSS selector
+- `type` (string): Type of the data. Currently, only "string" is a valid type
+- `data` (string): New value
