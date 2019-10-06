@@ -88,7 +88,7 @@ See [Watch schema](#watch-schema-watches-collection).
 
 ##### Request body
 
-Array of objects
+Array of updated target objects (not all)
 
 - `name` (string): Unique name
 - `cssSelector` (string): CSS selector
