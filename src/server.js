@@ -20,14 +20,15 @@ server.post('/', async (req, res) => {
     const watchCollection = await getCollection('watches')
 
     // add a document into the database
+    const now = new Date()
     const { insertedId } = await watchCollection.insertOne({
-      userID,
+      userID: new ObjectID(userID),
       url,
       interval,
       targets,
       active: true,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: now,
+      updatedAt: now
     })
 
     // add this watch into the scheduler
@@ -45,7 +46,7 @@ server.post('/', async (req, res) => {
 
 server.get('/:id', async (req, res) => {
   try {
-    const _id = ObjectID(req.params.id)
+    const _id = new ObjectID(req.params.id)
     const watchCollection = await getCollection('watches')
     const result = await watchCollection.findOne({ _id })
     res.code(200).send(result)
@@ -57,21 +58,24 @@ server.get('/:id', async (req, res) => {
 
 server.put('/:id/targets', async (req, res) => {
   try {
-    const _id = ObjectID(req.params.id)
+    const _id = new ObjectID(req.params.id)
     const watchCollection = await getCollection('watches')
-    const updatedAt = new Date()
-    const watch = await watchCollection.findOne({ _id })
-    const { targets } = watch
-    for (const updateTarget of req.body) {
-      const { name } = updateTarget
-      for (let target of targets) {
-        if (name === target.name) {
-          target.data = updateTarget.data
-          target.updatedAt = updatedAt
+    const now = new Date()
+
+    let { targets } = await watchCollection.findOne({ _id })
+    targets = targets.map((target) => {
+      let newTarget = target
+      for (const updatedTarget of req.body) {
+        if (target.name === updatedTarget.name) {
+          newTarget = updatedTarget
+          break
         }
       }
-    }
-    watchCollection.updateOne({ _id }, { $set: { targets, updatedAt } })
+      newTarget.updatedAt = now
+      return newTarget
+    })
+
+    watchCollection.updateOne({ _id }, { $set: { targets, updatedAt: now } })
     res.code(204)
   } catch (err) {
     req.log.error(err.message)
