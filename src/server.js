@@ -32,7 +32,7 @@ server.post('/', async (req, res) => {
     })
 
     // add this watch into the scheduler
-    const { status } = await axios.post(`${SCHEDULER_ADDRESS}/watch`, {
+    const { status } = await axios.post(`${SCHEDULER_ADDRESS}/watches`, {
       interval,
       payload: insertedId
     })
