@@ -28,8 +28,8 @@ $ yarn start # yarn dev for development
 
 #### Watch schema ("watches" collection)
 
-- `_id` (ObjectId): Auto-generated ID
-- `userID` (ObjectId): ID of the user to whom this watch belongs
+- `_id` (ObjectID): Auto-generated ID
+- `userID` (ObjectID): ID of the user to whom this watch belongs
 - `url` (string): URL to crawl
 - `interval` (positive integer): Number of seconds between executions
 - `targets` (object[]): Array of target objects
@@ -58,7 +58,7 @@ $ yarn start # yarn dev for development
 
 ##### Request body
 
-- `userID` (ObjectId): ID of the user to whom this watch belongs
+- `userID` (ObjectID): ID of the user to whom this watch belongs
 - `url` (string): URL to crawl
 - `interval` (positive integer): Number of seconds between executions
 - `targets` (object[]): Array of target objects
@@ -72,7 +72,7 @@ $ yarn start # yarn dev for development
 
 ##### Route parameters
 
-- `id` (string): ID of the watch
+- `id` (ObjectID): ID of the watch
 
 ##### Response body
 
@@ -84,7 +84,7 @@ See [Watch schema](#watch-schema-watches-collection).
 
 ##### Route parameters
 
-- `id` (string): ID of the watch
+- `id` (ObjectID): ID of the watch
 
 ##### Request body
 
