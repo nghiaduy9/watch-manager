@@ -68,10 +68,10 @@ server.put('/:id/targets', async (req, res) => {
       for (const updatedTarget of req.body) {
         if (target.name === updatedTarget.name) {
           newTarget = updatedTarget
+          newTarget.updatedAt = now
           break
         }
       }
-      newTarget.updatedAt = now
       return newTarget
     })
 
