@@ -44,7 +44,7 @@ $ yarn start # yarn dev for development
 
 ### Routes
 
-#### GET `/`
+#### 1. GET `/`
 
 > Just for testing
 
@@ -52,7 +52,7 @@ $ yarn start # yarn dev for development
 
 - `iam`: `"/"`
 
-#### POST `/`
+#### 2. POST `/`
 
 > Add a new watch
 
@@ -66,7 +66,7 @@ $ yarn start # yarn dev for development
   - `cssSelector` (string): CSS selector
   - `type` (string): Type of the data. Currently, only "string" is a valid type
 
-#### GET `/:id`
+#### 3. GET `/:id`
 
 > Get all information of a watch
 
@@ -78,7 +78,7 @@ $ yarn start # yarn dev for development
 
 See [Watch schema](#watch-schema-watches-collection).
 
-#### PUT `/:id/targets`
+#### 4. PUT `/:id/targets`
 
 > Update targets information of a watch
 
