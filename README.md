@@ -95,12 +95,11 @@ Array of updated target objects (not all)
 - `type` (string): Type of the data. Currently, only "string" is a valid type
 - `data` (string): New value
 
-#### 5. PUT `/:id/activate`
+#### 5. PUT `/:id/status/:newStatus`
 
-#### 6. PUT `/:id/deactivate`
-
-> Activate and deactivate a watch
+> Activate or deactivate a watch
 
 ##### Route parameters
 
 - `id` (ObjectID): ID of the watch
+- `newStatus` (string): Either "active" or "inactive"
