@@ -94,3 +94,13 @@ Array of updated target objects (not all)
 - `cssSelector` (string): CSS selector
 - `type` (string): Type of the data. Currently, only "string" is a valid type
 - `data` (string): New value
+
+#### 4. PUT `/:id/activate`
+
+#### 5. PUT `/:id/deactivate`
+
+> Activate and deactivate a watch
+
+##### Route parameters
+
+- `id` (ObjectID): ID of the watch
