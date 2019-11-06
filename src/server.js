@@ -83,6 +83,35 @@ server.put('/:id/targets', async (req, res) => {
   }
 })
 
+server.put('/:id/status/:newStatus', async (req, res) => {
+  try {
+    const _id = new ObjectID(req.params.id)
+    const { newStatus } = req.params
+    const watchCollection = await getCollection('watches')
+    const now = new Date()
+    if (newStatus === 'inactive') {
+      axios.delete(`${SCHEDULER_ADDRESS}/watches`, {
+        data: { payload: { watchID: _id } }
+      })
+      watchCollection.updateOne({ _id }, { $set: { active: false, updatedAt: now } })
+    } else if (newStatus === 'active') {
+      const watch = await watchCollection.findOne({ _id })
+      const { active, interval } = watch
+      if (!active) {
+        axios.post(`${SCHEDULER_ADDRESS}/watches`, {
+          interval,
+          payload: { watchID: _id }
+        })
+        watchCollection.updateOne({ _id }, { $set: { active: true, updatedAt: now } })
+      }
+    }
+    res.code(204)
+  } catch (err) {
+    req.log.error(err.message)
+    res.code(500)
+  }
+})
+
 const start = async () => {
   try {
     await server.listen(PORT, '::') // listen to all IPv6 and IPv4 addresses
