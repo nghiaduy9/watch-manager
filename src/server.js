@@ -1,11 +1,9 @@
-require('dotenv-flow').config()
-
 const fastify = require('fastify')
 const axios = require('axios')
 const { ObjectID } = require('mongodb')
 const { getCollection } = require('./database')
 
-const { NODE_ENV, PORT, SCHEDULER_ADDRESS } = process.env
+const { NODE_ENV, PORT, GATEWAY_ADDRESS } = process.env
 
 const loggerLevel = NODE_ENV !== 'production' ? 'debug' : 'info'
 const server = fastify({ ignoreTrailingSlash: true, logger: { level: loggerLevel } })
@@ -32,7 +30,7 @@ server.post('/', async (req, res) => {
     })
 
     // add this watch into the scheduler
-    const { status } = await axios.post(`${SCHEDULER_ADDRESS}/watches`, {
+    const { status } = await axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
       interval,
       payload: { watchID: insertedId }
     })
@@ -90,7 +88,7 @@ server.put('/:id/status/:newStatus', async (req, res) => {
     const watchCollection = await getCollection('watches')
     const now = new Date()
     if (newStatus === 'inactive') {
-      axios.delete(`${SCHEDULER_ADDRESS}/watches`, {
+      axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
         data: { payload: { watchID: _id } }
       })
       watchCollection.updateOne({ _id }, { $set: { active: false, updatedAt: now } })
@@ -98,7 +96,7 @@ server.put('/:id/status/:newStatus', async (req, res) => {
       const watch = await watchCollection.findOne({ _id })
       const { active, interval } = watch
       if (!active) {
-        axios.post(`${SCHEDULER_ADDRESS}/watches`, {
+        axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
           interval,
           payload: { watchID: _id }
         })
