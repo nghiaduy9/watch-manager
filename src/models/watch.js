@@ -1,30 +1,27 @@
-const Id = {
+const _id = {
   bsonType: 'objectId',
-  minLength: 24,
-  maxLength: 24,
   description: 'ID of watch'
 }
 
-const UserID = {
+const userID = {
   bsonType: 'objectId',
-  minLength: 24,
-  maxLength: 24,
   description: 'ID of the user to whom this watch belongs'
 }
 
-const Url = {
+const url = {
   bsonType: 'string',
   description: 'URL to crawl'
 }
 
-const Interval = {
+const interval = {
   bsonType: 'int',
   minimum: 300,
   description: 'Number of seconds between executions'
 }
 
-const Targets = {
+const targets = {
   bsonType: 'array',
+  minItems: 1,
   items: {
     bsonType: 'object',
     required: ['name', 'cssSelector', 'type'],
@@ -51,21 +48,20 @@ const Targets = {
       }
     }
   },
-  minItems: 1,
   description: 'Array of target objects'
 }
 
-const Active = {
+const active = {
   bsonType: 'bool',
   description: 'Being scheduled or not'
 }
 
-const CreatedAt = {
+const createdAt = {
   bsonType: 'date',
   description: 'Time at which the user was created'
 }
 
-const UpdatedAt = {
+const updatedAt = {
   bsonType: 'date',
   description: 'Time at which the data was last updated'
 }
@@ -83,14 +79,14 @@ const Watch = {
     'updatedAt'
   ],
   properties: {
-    _id: Id,
-    userID: UserID,
-    url: Url,
-    interval: Interval,
-    targets: Targets,
-    active: Active,
-    createdAt: CreatedAt,
-    updatedAt: UpdatedAt
+    _id,
+    userID,
+    url,
+    interval,
+    targets,
+    active,
+    createdAt,
+    updatedAt
   }
 }
 
