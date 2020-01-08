@@ -35,10 +35,10 @@ server.post('/', async (req, res) => {
       payload: { watchID: insertedId }
     })
 
-    res.code(status)
+    res.code(status).send()
   } catch (err) {
     req.log.error(err.message)
-    res.code(500)
+    res.code(500).send()
   }
 })
 
@@ -50,7 +50,7 @@ server.get('/:id', async (req, res) => {
     res.code(200).send(result)
   } catch (err) {
     req.log.error(err.message)
-    res.code(500)
+    res.code(500).send()
   }
 })
 
@@ -74,10 +74,10 @@ server.put('/:id/targets', async (req, res) => {
     })
 
     watchCollection.updateOne({ _id }, { $set: { targets, updatedAt: now } })
-    res.code(204)
+    res.code(204).send()
   } catch (err) {
     req.log.error(err.message)
-    res.code(500)
+    res.code(500).send()
   }
 })
 
@@ -103,10 +103,10 @@ server.put('/:id/status/:newStatus', async (req, res) => {
         watchCollection.updateOne({ _id }, { $set: { active: true, updatedAt: now } })
       }
     }
-    res.code(204)
+    res.code(204).send()
   } catch (err) {
     req.log.error(err.message)
-    res.code(500)
+    res.code(500).send()
   }
 })
 
