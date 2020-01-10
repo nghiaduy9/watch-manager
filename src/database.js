@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb')
-const { Watch: watchSchema } = require('./models/watch')
+const { watchSchema } = require('./models/watch')
 
 const { MONGODB_URI, MONGODB_DB_NAME } = process.env
 const client = new MongoClient(MONGODB_URI, { useNewUrlParser: true })

@@ -1,25 +1,25 @@
-const _id = {
+const _idSchema = {
   bsonType: 'objectId',
   description: 'ID of watch'
 }
 
-const userID = {
+const userIDSchema = {
   bsonType: 'objectId',
   description: 'ID of the user to whom this watch belongs'
 }
 
-const url = {
+const urlSchema = {
   bsonType: 'string',
   description: 'URL to crawl'
 }
 
-const interval = {
+const intervalSchema = {
   bsonType: 'int',
   minimum: 300,
   description: 'Number of seconds between executions'
 }
 
-const targets = {
+const targetsSchema = {
   bsonType: 'array',
   minItems: 1,
   items: {
@@ -51,22 +51,22 @@ const targets = {
   description: 'Array of target objects'
 }
 
-const active = {
+const activeSchema = {
   bsonType: 'bool',
   description: 'Being scheduled or not'
 }
 
-const createdAt = {
+const createdAtSchema = {
   bsonType: 'date',
   description: 'Time at which the user was created'
 }
 
-const updatedAt = {
+const updatedAtSchema = {
   bsonType: 'date',
   description: 'Time at which the data was last updated'
 }
 
-const Watch = {
+const watchSchema = {
   bsonType: 'object',
   required: [
     '_id',
@@ -79,15 +79,15 @@ const Watch = {
     'updatedAt'
   ],
   properties: {
-    _id,
-    userID,
-    url,
-    interval,
-    targets,
-    active,
-    createdAt,
-    updatedAt
+    _id: _idSchema,
+    userID: userIDSchema,
+    url: urlSchema,
+    interval: intervalSchema,
+    targets: targetsSchema,
+    active: activeSchema,
+    createdAt: createdAtSchema,
+    updatedAt: updatedAtSchema
   }
 }
 
-module.exports = { Watch }
+module.exports = { watchSchema }
