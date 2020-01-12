@@ -18,7 +18,7 @@
 
 ### Routes
 
-#### 1. GET `/`
+#### 0. GET `/`
 
 > Just for testing
 
@@ -26,7 +26,7 @@
 
 - `iam`: `"/"`
 
-#### 2. POST `/`
+#### 1. POST `/`
 
 > Add a new watch
 
@@ -40,7 +40,7 @@
   - `cssSelector` (string): CSS selector
   - `type` (string): Type of the data. Currently, only "string" is a valid type
 
-#### 3. GET `/:id`
+#### 2. GET `/:id`
 
 > Get all information of a watch
 
@@ -52,7 +52,7 @@
 
 See [Watch schema][0].
 
-#### 4. PUT `/:id/targets`
+#### 3. PUT `/:id/targets`
 
 > Update targets information of a watch
 
@@ -69,7 +69,7 @@ Array of updated target objects (not all)
 - `type` (string): Type of the data. Currently, only "string" is a valid type
 - `data` (string): New value
 
-#### 5. PUT `/:id/status/:newStatus`
+#### 4. PUT `/:id/status/:newStatus`
 
 > Activate or deactivate a watch
 
@@ -77,5 +77,17 @@ Array of updated target objects (not all)
 
 - `id` (ObjectID): ID of the watch
 - `newStatus` (string): Either "active" or "inactive"
+
+#### 5. GET `/users/:userID`
+
+> Get all watches of an user
+
+##### Route parameters
+
+- `userID` (ObjectID): ID of the user
+
+##### Response body
+
+Array of watch objects. See [Watch schema][0].
 
 [0]: https://github.com/night-watch-project/watch-manager/blob/master/src/models/watch.js
