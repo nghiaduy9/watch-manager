@@ -13,7 +13,7 @@ module.exports = (server, opts, next) => {
 
   server.post('/', async (req, res) => {
     try {
-      const { userID, url, interval, targets } = req.body  
+      const { userID, url, interval, targets } = req.body
 
       // add a document into the database
       const now = new Date()
@@ -99,6 +99,17 @@ module.exports = (server, opts, next) => {
         }
       }
       res.code(204).send()
+    } catch (err) {
+      req.log.error(err.message)
+      res.code(500).send()
+    }
+  })
+
+  server.get('/users/:userID', async (req, res) => {
+    try {
+      const userID = new ObjectID(req.params.userID)
+      const result = await watchCollection.find({ userID }).toArray()
+      res.code(200).send(result)
     } catch (err) {
       req.log.error(err.message)
       res.code(500).send()
