@@ -16,9 +16,10 @@
     "start": "NODE_ENV=production node src/server"
   },
   "dependencies": {
-    "@albert-team/mongol": "^0.1.3",
+    "@albert-team/mongol": "^0.2.0",
     "axios": "^0.19.1",
     "fastify": "^2.11.0",
+    "fastify-plugin": "^1.6.0",
     "mongodb": "^3.4.1"
   },
   "devDependencies": {

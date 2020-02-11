@@ -90,4 +90,4 @@ Array of updated target objects (not all)
 
 Array of watch objects. See [Watch schema][0].
 
-[0]: https://github.com/night-watch-project/watch-manager/blob/master/src/models/watch.js
+[0]: https://github.com/night-watch-project/watch-manager/blob/master/src/schemas/models/watch.js

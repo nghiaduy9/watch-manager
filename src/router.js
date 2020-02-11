@@ -3,7 +3,7 @@ const { ObjectID } = require('mongodb')
 
 const { GATEWAY_ADDRESS } = process.env
 
-module.exports = (server, opts, next) => {
+module.exports = async (server, opts) => {
   const { mongol } = opts
   const watchCollection = mongol.database.collection('watches')
 
@@ -115,6 +115,4 @@ module.exports = (server, opts, next) => {
       res.code(500).send()
     }
   })
-
-  next()
 }
