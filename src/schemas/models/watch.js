@@ -75,8 +75,7 @@ const watchSchema = {
     'interval',
     'targets',
     'active',
-    'createdAt',
-    'updatedAt'
+    'createdAt'
   ],
   properties: {
     _id: _idSchema,

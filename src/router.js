@@ -1,11 +1,16 @@
 const axios = require('axios')
 const { ObjectID } = require('mongodb')
+const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
 
 const { GATEWAY_ADDRESS } = process.env
 
 module.exports = async (server, opts) => {
   const { mongol } = opts
   const watchCollection = mongol.database.collection('watches')
+  mongol.attachDatabaseHook(
+    watchCollection,
+    createTimestampHook()
+  )
 
   server.get('/', async () => {
     return { iam: '/' }
@@ -16,15 +21,12 @@ module.exports = async (server, opts) => {
       const { userID, url, interval, targets } = req.body
 
       // add a document into the database
-      const now = new Date()
       const { insertedId } = await watchCollection.insertOne({
         userID: new ObjectID(userID),
         url,
         interval,
         targets,
-        active: true,
-        createdAt: now,
-        updatedAt: now
+        active: true
       })
 
       // add this watch into the scheduler
@@ -54,7 +56,6 @@ module.exports = async (server, opts) => {
   server.put('/:id/targets', async (req, res) => {
     try {
       const _id = new ObjectID(req.params.id)
-      const now = new Date()
 
       let { targets } = await watchCollection.findOne({ _id })
       targets = targets.map((target) => {
@@ -62,14 +63,14 @@ module.exports = async (server, opts) => {
         for (const updatedTarget of req.body) {
           if (target.name === updatedTarget.name) {
             newTarget = updatedTarget
-            newTarget.updatedAt = now
+            newTarget.updatedAt = new Date()
             break
           }
         }
         return newTarget
       })
 
-      watchCollection.updateOne({ _id }, { $set: { targets, updatedAt: now } })
+      watchCollection.updateOne({ _id }, { $set: { targets } })
       res.code(204).send()
     } catch (err) {
       req.log.error(err.message)
@@ -81,12 +82,11 @@ module.exports = async (server, opts) => {
     try {
       const _id = new ObjectID(req.params.id)
       const { newStatus } = req.params
-      const now = new Date()
       if (newStatus === 'inactive') {
         axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
           data: { payload: { watchID: _id } }
         })
-        watchCollection.updateOne({ _id }, { $set: { active: false, updatedAt: now } })
+        watchCollection.updateOne({ _id }, { $set: { active: false } })
       } else if (newStatus === 'active') {
         const watch = await watchCollection.findOne({ _id })
         const { active, interval } = watch
@@ -95,7 +95,7 @@ module.exports = async (server, opts) => {
             interval,
             payload: { watchID: _id }
           })
-          watchCollection.updateOne({ _id }, { $set: { active: true, updatedAt: now } })
+          watchCollection.updateOne({ _id }, { $set: { active: true } })
         }
       }
       res.code(204).send()
