@@ -23,13 +23,16 @@ module.exports = async (server, opts) => {
   server.post('/', { schema: addNewWatchSchema }, async (req, res) => {
     try {
       const { userID, url, interval, targets } = req.body
-
+      const newTargets = targets.map((target) => {
+        target._id = new ObjectID()
+        return target
+      })
       // add a document into the database
       const { insertedId } = await watchCollection.insertOne({
         userID: new ObjectID(userID),
         url,
         interval,
-        targets,
+        targets: newTargets,
         active: true
       })
 
@@ -74,7 +77,7 @@ module.exports = async (server, opts) => {
         return newTarget
       })
 
-      watchCollection.updateOne({ _id }, { $set: { targets } })
+      watchCollection.updateOne({ _id }, { $set: { targets, checkedAt: new Date() } })
       res.code(204).send()
     } catch (err) {
       req.log.error(err.message)
