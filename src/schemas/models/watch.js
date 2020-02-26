@@ -24,8 +24,12 @@ const targetsSchema = {
   minItems: 1,
   items: {
     bsonType: 'object',
-    required: ['name', 'cssSelector', 'type'],
+    required: ['_id', 'name', 'cssSelector', 'type'],
     properties: {
+      _id: {
+        bsonType: 'objectId',
+        description: 'ID of target'
+      },
       name: {
         bsonType: 'string',
         description: 'Unique name'
@@ -66,6 +70,11 @@ const updatedAtSchema = {
   description: 'Time at which the data was last updated'
 }
 
+const checkedAtSchema = {
+  bsonType: 'date',
+  description: 'Time at which the data was last checked'
+}
+
 const watchSchema = {
   bsonType: 'object',
   required: [
@@ -85,7 +94,8 @@ const watchSchema = {
     targets: targetsSchema,
     active: activeSchema,
     createdAt: createdAtSchema,
-    updatedAt: updatedAtSchema
+    updatedAt: updatedAtSchema,
+    checkedAt: checkedAtSchema
   }
 }
 

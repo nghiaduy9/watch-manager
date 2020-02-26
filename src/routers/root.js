@@ -7,10 +7,7 @@ const { GATEWAY_ADDRESS } = process.env
 module.exports = async (server, opts) => {
   const { mongol } = opts
   const watchCollection = mongol.database.collection('watches')
-  mongol.attachDatabaseHook(
-    watchCollection,
-    createTimestampHook()
-  )
+  mongol.attachDatabaseHook(watchCollection, createTimestampHook())
 
   server.get('/', async () => {
     return { iam: '/' }
@@ -19,13 +16,16 @@ module.exports = async (server, opts) => {
   server.post('/', async (req, res) => {
     try {
       const { userID, url, interval, targets } = req.body
-
+      const newTargets = targets.map((target) => {
+        target._id = new ObjectID()
+        return target
+      })
       // add a document into the database
       const { insertedId } = await watchCollection.insertOne({
         userID: new ObjectID(userID),
         url,
         interval,
-        targets,
+        targets: newTargets,
         active: true
       })
 
@@ -70,7 +70,7 @@ module.exports = async (server, opts) => {
         return newTarget
       })
 
-      watchCollection.updateOne({ _id }, { $set: { targets } })
+      watchCollection.updateOne({ _id }, { $set: { targets, checkedAt: new Date() } })
       res.code(204).send()
     } catch (err) {
       req.log.error(err.message)
