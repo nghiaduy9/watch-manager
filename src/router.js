@@ -7,7 +7,7 @@ const {
   updateWatchSchema,
   changeWatchStatusSchema,
   getAllWatchByUserIDSchema
-} = require('./schemas/routes/index')
+} = require('./schemas/routes')
 
 const { GATEWAY_ADDRESS } = process.env
 
