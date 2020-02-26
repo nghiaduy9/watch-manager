@@ -1,26 +1,36 @@
 const _idSchema = {
   bsonType: 'objectId',
+  type: 'string',
+  minLength: 24,
+  maxLength: 24,
   description: 'ID of watch'
 }
 
 const userIDSchema = {
   bsonType: 'objectId',
+  type: 'string',
+  minLength: 24,
+  maxLength: 24,
   description: 'ID of the user to whom this watch belongs'
 }
 
 const urlSchema = {
   bsonType: 'string',
+  type: 'string',
+  format: 'uri',
   description: 'URL to crawl'
 }
 
 const intervalSchema = {
   bsonType: 'int',
+  type: 'number',
   minimum: 300,
   description: 'Number of seconds between executions'
 }
 
 const targetsSchema = {
   bsonType: 'array',
+  type: 'array',
   minItems: 1,
   items: {
     bsonType: 'object',
@@ -53,21 +63,27 @@ const targetsSchema = {
 
 const activeSchema = {
   bsonType: 'bool',
+  type: 'boolean',
   description: 'Being scheduled or not'
 }
 
 const createdAtSchema = {
   bsonType: 'date',
+  type: 'string',
+  format: 'date',
   description: 'Time at which the user was created'
 }
 
 const updatedAtSchema = {
   bsonType: 'date',
+  type: 'string',
+  format: 'date',
   description: 'Time at which the data was last updated'
 }
 
 const watchSchema = {
   bsonType: 'object',
+  type: 'object',
   required: [
     '_id',
     'userID',
@@ -89,4 +105,11 @@ const watchSchema = {
   }
 }
 
-module.exports = { watchSchema }
+module.exports = { 
+  _idSchema,
+  userIDSchema,
+  urlSchema,
+  intervalSchema,
+  targetsSchema,
+  watchSchema
+}
