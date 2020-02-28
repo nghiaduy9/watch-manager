@@ -1,6 +1,13 @@
 const axios = require('axios')
 const { ObjectID } = require('mongodb')
 const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
+const {
+  createWatchSchema,
+  getWatchByIDSchema,
+  updateWatchTargetsSchema,
+  updateWatchStatusSchema,
+  getWatchsByUserIDSchema
+} = require('../schemas/routes')
 
 const { GATEWAY_ADDRESS } = process.env
 
@@ -13,7 +20,7 @@ module.exports = async (server, opts) => {
     return { iam: '/' }
   })
 
-  server.post('/', async (req, res) => {
+  server.post('/', { schema: createWatchSchema }, async (req, res) => {
     try {
       const { userID, url, interval, targets } = req.body
       const newTargets = targets.map((target) => {
@@ -42,7 +49,7 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.get('/:id', async (req, res) => {
+  server.get('/:id', { schema: getWatchByIDSchema }, async (req, res) => {
     try {
       const _id = new ObjectID(req.params.id)
       const result = await watchCollection.findOne({ _id })
@@ -53,7 +60,7 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.put('/:id/targets', async (req, res) => {
+  server.put('/:id/targets', { schema: updateWatchTargetsSchema }, async (req, res) => {
     try {
       const _id = new ObjectID(req.params.id)
 
@@ -78,41 +85,49 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.put('/:id/status/:newStatus', async (req, res) => {
-    try {
-      const _id = new ObjectID(req.params.id)
-      const { newStatus } = req.params
-      if (newStatus === 'inactive') {
-        axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
-          data: { payload: { watchID: _id } }
-        })
-        watchCollection.updateOne({ _id }, { $set: { active: false } })
-      } else if (newStatus === 'active') {
-        const watch = await watchCollection.findOne({ _id })
-        const { active, interval } = watch
-        if (!active) {
-          axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
-            interval,
-            payload: { watchID: _id }
+  server.put(
+    '/:id/status/:newStatus',
+    { schema: updateWatchStatusSchema },
+    async (req, res) => {
+      try {
+        const _id = new ObjectID(req.params.id)
+        const { newStatus } = req.params
+        if (newStatus === 'inactive') {
+          axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
+            data: { payload: { watchID: _id } }
           })
-          watchCollection.updateOne({ _id }, { $set: { active: true } })
+          watchCollection.updateOne({ _id }, { $set: { active: false } })
+        } else if (newStatus === 'active') {
+          const watch = await watchCollection.findOne({ _id })
+          const { active, interval } = watch
+          if (!active) {
+            axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
+              interval,
+              payload: { watchID: _id }
+            })
+            watchCollection.updateOne({ _id }, { $set: { active: true } })
+          }
         }
+        res.code(204).send()
+      } catch (err) {
+        req.log.error(err.message)
+        res.code(500).send()
       }
-      res.code(204).send()
-    } catch (err) {
-      req.log.error(err.message)
-      res.code(500).send()
     }
-  })
+  )
 
-  server.get('/users/:userID', async (req, res) => {
-    try {
-      const userID = new ObjectID(req.params.userID)
-      const result = await watchCollection.find({ userID }).toArray()
-      res.code(200).send(result)
-    } catch (err) {
-      req.log.error(err.message)
-      res.code(500).send()
+  server.get(
+    '/users/:userID',
+    { schema: getWatchsByUserIDSchema },
+    async (req, res) => {
+      try {
+        const userID = new ObjectID(req.params.userID)
+        const result = await watchCollection.find({ userID }).toArray()
+        res.code(200).send(result)
+      } catch (err) {
+        req.log.error(err.message)
+        res.code(500).send()
+      }
     }
-  })
+  )
 }
