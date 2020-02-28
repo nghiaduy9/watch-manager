@@ -66,7 +66,7 @@ const targetsSchema = {
       updatedAt: {
         bsonType: 'date',
         type: 'string',
-        format: 'date',
+        format: 'date-time',
         description: 'Time at which the data was last updated'
       }
     }
@@ -83,21 +83,21 @@ const activeSchema = {
 const createdAtSchema = {
   bsonType: 'date',
   type: 'string',
-  format: 'date',
+  format: 'date-time',
   description: 'Time at which the user was created'
 }
 
 const updatedAtSchema = {
   bsonType: 'date',
   type: 'string',
-  format: 'date',
+  format: 'date-time',
   description: 'Time at which the data was last updated'
 }
 
 const checkedAtSchema = {
   bsonType: 'date',
   type: 'string',
-  format: 'date',
+  format: 'date-time',
   description: 'Time at which the data was last checked'
 }
 
