@@ -34,6 +34,7 @@ const targetsSchema = {
   minItems: 1,
   items: {
     bsonType: 'object',
+    type: 'object',
     required: ['_id', 'name', 'cssSelector', 'type'],
     properties: {
       _id: {
@@ -52,6 +53,8 @@ const targetsSchema = {
         description: 'CSS selector'
       },
       type: {
+        bsonType: 'string',
+        type: 'string',
         enum: ['string'],
         description: 'Type of the data'
       },
@@ -63,6 +66,7 @@ const targetsSchema = {
       updatedAt: {
         bsonType: 'date',
         type: 'string',
+        format: 'date',
         description: 'Time at which the data was last updated'
       }
     }
@@ -92,6 +96,8 @@ const updatedAtSchema = {
 
 const checkedAtSchema = {
   bsonType: 'date',
+  type: 'string',
+  format: 'date',
   description: 'Time at which the data was last checked'
 }
 

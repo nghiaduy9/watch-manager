@@ -9,6 +9,7 @@ const {
 
 const createWatchSchema = {
   body: {
+    bsonType: 'object',
     type: 'object',
     required: ['userID', 'url', 'interval', 'targets'],
     properties: {
@@ -29,6 +30,7 @@ const createWatchSchema = {
 
 const getWatchByIDSchema = {
   params: {
+    bsonType: 'object',
     type: 'object',
     required: ['id'],
     properties: {
@@ -42,6 +44,7 @@ const getWatchByIDSchema = {
 
 const updateWatchTargetsSchema = {
   params: {
+    bsonType: 'object',
     type: 'object',
     required: ['id'],
     properties: {
@@ -59,12 +62,14 @@ const updateWatchTargetsSchema = {
 
 const updateWatchStatusSchema = {
   params: {
+    bsonType: 'object',
     type: 'object',
     required: ['id', 'newStatus'],
     properties: {
       id: _idSchema,
       newStatus: {
         type: 'string',
+        enum: ['active', 'inactive'],
         description: 'Either "active" or "inactive"'
       }
     }
@@ -73,6 +78,7 @@ const updateWatchStatusSchema = {
 
 const getWatchsByUserIDSchema = {
   params: {
+    bsonType: 'object',
     type: 'object',
     required: ['id'],
     properties: {
@@ -81,6 +87,7 @@ const getWatchsByUserIDSchema = {
   },
   response: {
     200: {
+      bsonType: 'array',
       type: 'array',
       items: watchSchema
     }
