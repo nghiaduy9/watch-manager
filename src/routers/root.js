@@ -2,12 +2,12 @@ const axios = require('axios')
 const { ObjectID } = require('mongodb')
 const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
 const {
-  addNewWatchSchema,
-  getWatchByWatchIDSchema,
-  updateWatchSchema,
-  changeWatchStatusSchema,
-  getAllWatchByUserIDSchema
-} = require('./schemas/routes')
+  createWatchSchema,
+  getWatchByIDSchema,
+  updateWatchTargetsSchema,
+  updateWatchStatusSchema,
+  getWatchsByUserIDSchema
+} = require('../schemas/routes')
 
 const { GATEWAY_ADDRESS } = process.env
 

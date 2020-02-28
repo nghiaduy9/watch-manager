@@ -81,10 +81,7 @@ const getAllWatchByUserIDSchema = {
   response: {
     200: {
       type: 'array',
-      items: {
-        type: watchSchema.type,
-        required: watchSchema.required,
-        properties: watchSchema.properties
+      items: watchSchema
       }
     }
   }

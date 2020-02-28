@@ -23,7 +23,7 @@ const urlSchema = {
 
 const intervalSchema = {
   bsonType: 'int',
-  type: 'number',
+  type: 'integer',
   minimum: 300,
   description: 'Number of seconds between executions'
 }
