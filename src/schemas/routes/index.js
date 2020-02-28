@@ -5,7 +5,6 @@ const {
   urlSchema,
   intervalSchema,
   targetsSchema,
-  activeSchema
 } = require('../models/watch')
 
 const createWatchSchema = {
@@ -31,7 +30,7 @@ const createWatchSchema = {
 const getWatchByIDSchema = {
   params: {
     type: 'object',
-    required: 'id',
+    required: ['id'],
     properties: {
       id: _idSchema
     }
@@ -51,7 +50,6 @@ const updateWatchTargetsSchema = {
   },
   body: {
     type: targetsSchema.type,
-    minItems: 1,
     items: {
       required: ['name', 'cssSelector', 'type', 'data'],
       properties: targetsSchema.items.properties
@@ -65,7 +63,10 @@ const updateWatchStatusSchema = {
     required: ['id', 'newStatus'],
     properties: {
       id: _idSchema,
-      newStatus: activeSchema
+      newStatus: {
+        type: 'string',
+        description: 'Either "active" or "inactive"'
+      }
     }
   }
 }
@@ -82,7 +83,6 @@ const getWatchsByUserIDSchema = {
     200: {
       type: 'array',
       items: watchSchema
-      }
     }
   }
 }
