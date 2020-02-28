@@ -38,14 +38,17 @@ const targetsSchema = {
     properties: {
       _id: {
         bsonType: 'objectId',
+        type: 'string',
         description: 'ID of target'
       },
       name: {
         bsonType: 'string',
+        type: 'string',
         description: 'Unique name'
       },
       cssSelector: {
         bsonType: 'string',
+        type: 'string',
         description: 'CSS selector'
       },
       type: {
@@ -54,10 +57,12 @@ const targetsSchema = {
       },
       data: {
         bsonType: 'string',
+        type: 'string',
         description: 'Current value'
       },
       updatedAt: {
         bsonType: 'date',
+        type: 'string',
         description: 'Time at which the data was last updated'
       }
     }
