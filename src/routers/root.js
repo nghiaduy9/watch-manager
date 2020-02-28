@@ -20,7 +20,7 @@ module.exports = async (server, opts) => {
     return { iam: '/' }
   })
 
-  server.post('/', { schema: addNewWatchSchema }, async (req, res) => {
+  server.post('/', { schema: createWatchSchema }, async (req, res) => {
     try {
       const { userID, url, interval, targets } = req.body
       const newTargets = targets.map((target) => {
@@ -49,7 +49,7 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.get('/:id', { schema: getWatchByWatchIDSchema }, async (req, res) => {
+  server.get('/:id', { schema: getWatchByIDSchema }, async (req, res) => {
     try {
       const _id = new ObjectID(req.params.id)
       const result = await watchCollection.findOne({ _id })
@@ -60,7 +60,7 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.put('/:id/targets', { schema: updateWatchSchema }, async (req, res) => {
+  server.put('/:id/targets', { schema: updateWatchTargetsSchema }, async (req, res) => {
     try {
       const _id = new ObjectID(req.params.id)
 
@@ -87,7 +87,7 @@ module.exports = async (server, opts) => {
 
   server.put(
     '/:id/status/:newStatus',
-    { schema: changeWatchStatusSchema },
+    { schema: updateWatchStatusSchema },
     async (req, res) => {
       try {
         const _id = new ObjectID(req.params.id)
@@ -118,7 +118,7 @@ module.exports = async (server, opts) => {
 
   server.get(
     '/users/:userID',
-    { schema: getAllWatchByUserIDSchema },
+    { schema: getWatchsByUserIDSchema },
     async (req, res) => {
       try {
         const userID = new ObjectID(req.params.userID)
