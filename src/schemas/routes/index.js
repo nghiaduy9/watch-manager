@@ -87,7 +87,6 @@ const getWatchsByUserIDSchema = {
   },
   response: {
     200: {
-      bsonType: 'array',
       type: 'array',
       items: watchSchema
     }
