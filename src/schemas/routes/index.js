@@ -8,7 +8,7 @@ const {
   activeSchema
 } = require('../models/watch')
 
-const addNewWatchSchema = {
+const createWatchSchema = {
   body: {
     type: 'object',
     required: ['userID', 'url', 'interval', 'targets'],
@@ -28,7 +28,7 @@ const addNewWatchSchema = {
   }
 }
 
-const getWatchByWatchIDSchema = {
+const getWatchByIDSchema = {
   params: {
     type: 'object',
     required: 'id',
@@ -41,7 +41,7 @@ const getWatchByWatchIDSchema = {
   }
 }
 
-const updateWatchSchema = {
+const updateWatchTargetsSchema = {
   params: {
     type: 'object',
     required: ['id'],
@@ -59,7 +59,7 @@ const updateWatchSchema = {
   }
 }
 
-const changeWatchStatusSchema = {
+const updateWatchStatusSchema = {
   params: {
     type: 'object',
     required: ['id', 'newStatus'],
@@ -70,7 +70,7 @@ const changeWatchStatusSchema = {
   }
 }
 
-const getAllWatchByUserIDSchema = {
+const getWatchsByUserIDSchema = {
   params: {
     type: 'object',
     required: ['id'],
@@ -88,9 +88,9 @@ const getAllWatchByUserIDSchema = {
 }
 
 module.exports = {
-  addNewWatchSchema,
-  getWatchByWatchIDSchema,
-  updateWatchSchema,
-  changeWatchStatusSchema,
-  getAllWatchByUserIDSchema
+  createWatchSchema,
+  getWatchByIDSchema,
+  updateWatchTargetsSchema,
+  updateWatchStatusSchema,
+  getWatchsByUserIDSchema
 }
