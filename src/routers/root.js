@@ -116,18 +116,14 @@ module.exports = async (server, opts) => {
     }
   )
 
-  server.get(
-    '/users/:userID',
-    { schema: getWatchsByUserIDSchema },
-    async (req, res) => {
-      try {
-        const userID = new ObjectID(req.params.userID)
-        const result = await watchCollection.find({ userID }).toArray()
-        res.code(200).send(result)
-      } catch (err) {
-        req.log.error(err.message)
-        res.code(500).send()
-      }
+  server.get('/users/:userID', { schema: getWatchsByUserIDSchema }, async (req, res) => {
+    try {
+      const userID = new ObjectID(req.params.userID)
+      const result = await watchCollection.find({ userID }).toArray()
+      res.code(200).send(result)
+    } catch (err) {
+      req.log.error(err.message)
+      res.code(500).send()
     }
-  )
+  })
 }
