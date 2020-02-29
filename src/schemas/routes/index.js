@@ -4,7 +4,7 @@ const {
   userIDSchema,
   urlSchema,
   intervalSchema,
-  targetsSchema,
+  targetsSchema
 } = require('../models/watch')
 
 const createWatchSchema = {
@@ -80,9 +80,9 @@ const getWatchsByUserIDSchema = {
   params: {
     bsonType: 'object',
     type: 'object',
-    required: ['id'],
+    required: ['userID'],
     properties: {
-      id: _idSchema
+      userID: userIDSchema
     }
   },
   response: {
