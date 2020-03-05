@@ -51,7 +51,7 @@ const updateWatchTargetsSchema = {
   body: {
     type: targetsSchema.type,
     items: {
-      required: ['name', 'cssSelector', 'type', 'data'],
+      required: ['_id', 'name', 'cssSelector', 'type', 'data'],
       properties: targetsSchema.items.properties
     }
   }
