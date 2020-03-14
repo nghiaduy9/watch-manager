@@ -1,6 +1,7 @@
 const fastify = require('fastify')
 const mongolLoader = require('./loaders/mongol')
 const rootRouter = require('./routers/root')
+const historyRouter = require('./routers/history')
 
 const { NODE_ENV, PORT } = process.env
 
@@ -11,6 +12,9 @@ const main = async () => {
   try {
     server.register(mongolLoader)
     server.register(rootRouter, (parent) => {
+      return { mongol: parent.mongol }
+    })
+    server.register(historyRouter, (parent) => {
       return { mongol: parent.mongol }
     })
     await server.listen(PORT, '::') // listen to all IPv6 and IPv4 addresses

@@ -6,8 +6,12 @@ const { GATEWAY_ADDRESS } = process.env
 
 module.exports = class RootService {
   constructor(mongol) {
-    this.watchCollection = mongol.database.collection('watches')
-    mongol.attachDatabaseHook(this.watchCollection, createTimestampHook())
+    this.watchCollection = mongol
+      .collection('watches')
+      .attachHook(createTimestampHook())
+    this.historyCollection = mongol
+      .collection('history')
+      .attachHook(createTimestampHook())
   }
 
   async createWatch(data) {
@@ -30,7 +34,8 @@ module.exports = class RootService {
       interval,
       payload: { watchID: insertedId }
     })
-    if (status < 200 || status >= 300) return Promise.reject("Unable to add this watch to the scheduler")
+    if (status < 200 || status >= 300)
+      throw new Error('Unable to add this watch to the scheduler')
   }
 
   async getWatchByID(id) {
@@ -50,16 +55,18 @@ module.exports = class RootService {
         if (target._id.equals(updatedTarget._id)) {
           newTarget = updatedTarget
           newTarget.updatedAt = new Date()
+          this.historyCollection.insertOne({
+            watchID: _id,
+            targetID: target._id,
+            data: updatedTarget.data
+          })
           break
         }
       }
       return newTarget
     })
 
-    this.watchCollection.updateOne(
-      { _id },
-      { $set: { targets, checkedAt: new Date() } }
-    )
+    this.watchCollection.updateOne({ _id }, { $set: { targets, checkedAt: new Date() } })
   }
 
   async updateWatchStatus(id, newStatus) {
