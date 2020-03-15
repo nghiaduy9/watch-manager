@@ -1,5 +1,7 @@
-module.exports = (server, opts, next) => {
-  server.register(require('fastify-oas'), {
+const oas = require('fastify-oas')
+
+module.exports = async (server) => {
+  server.register(oas, {
     routePrefix: '/documentation', 
     swagger: {
       info: {
@@ -12,8 +14,11 @@ module.exports = (server, opts, next) => {
         description: 'Github'
       }
     },
-    exposeRoute: true
+    exposeRoute: true,
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    servers: [{
+      url: `http://localhost:${process.env.PORT}`
+    }]
   })
-
-  next()
 }
