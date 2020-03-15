@@ -8,7 +8,7 @@
   "engines": {
     "node": ">=12"
   },
-  "version": "0.3.0",
+  "version": "0.4.1",
   "main": "src/server.js",
   "scripts": {
     "clean": "rm -r yarn.lock node_modules",
@@ -16,11 +16,12 @@
     "start": "NODE_ENV=production node src/server"
   },
   "dependencies": {
-    "@albert-team/mongol": "^0.7.2",
-    "axios": "^0.19.1",
-    "fastify": "^2.11.0",
-    "fastify-plugin": "^1.6.0",
-    "mongodb": "^3.4.1"
+    "@albert-team/mongol": "^0.8.0",
+    "axios": "^0.19.2",
+    "fastify": "^2.12.1",
+    "fastify-oas": "^2.5.2",
+    "fastify-plugin": "^1.6.1",
+    "mongodb": "^3.5.4"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
