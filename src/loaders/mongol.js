@@ -1,7 +1,6 @@
 const { Mongol } = require('@albert-team/mongol')
 const fp = require('fastify-plugin')
-const { watchSchema } = require('../schemas/models/watch')
-const { historySchema } = require('../schemas/models/history')
+const { watchSchema, historySchema } = require('../schemas/models')
 
 const { MONGODB_URI, MONGODB_DB_NAME } = process.env
 
