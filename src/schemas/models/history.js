@@ -48,8 +48,4 @@ const historySchema = {
   }
 }
 
-module.exports = {
-  historySchema,
-  _idSchema,
-  targetIDSchema
-}
+module.exports = historySchema

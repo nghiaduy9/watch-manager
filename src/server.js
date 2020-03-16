@@ -1,8 +1,6 @@
 const fastify = require('fastify')
-const mongolLoader = require('./loaders/mongol')
-const rootRouter = require('./routers/root')
-const historyRouter = require('./routers/history')
-const oasLoader = require('./loaders/oas')
+const { mongolLoader, oasLoader } = require('./loaders')
+const { rootRouter, historyRouter } = require('./routers')
 
 const { NODE_ENV, PORT } = process.env
 

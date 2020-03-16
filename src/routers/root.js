@@ -1,4 +1,4 @@
-const RootService = require('../services/root')
+const { RootService } = require('../services')
 const {
   createWatchSchema,
   getWatchByIDSchema,

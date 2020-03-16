@@ -1,26 +1,19 @@
-const {
-  _idSchema,
-  watchSchema,
-  userIDSchema,
-  urlSchema,
-  intervalSchema,
-  targetsSchema
-} = require('../models/watch')
+const { watchSchema } = require('../models')
 
 const createWatchSchema = {
   body: {
     type: 'object',
     required: ['userID', 'url', 'interval', 'targets'],
     properties: {
-      userID: userIDSchema,
-      url: urlSchema,
-      interval: intervalSchema,
+      userID: watchSchema.properties.userID,
+      url: watchSchema.properties.url,
+      interval: watchSchema.properties.interval,
       targets: {
-        type: targetsSchema.type,
+        type: watchSchema.properties.targets.type,
         minItems: 1,
         items: {
           required: ['name', 'cssSelector', 'type'],
-          properties: targetsSchema.items.properties
+          properties: watchSchema.properties.targets.items.properties
         }
       }
     }
@@ -32,7 +25,7 @@ const getWatchByIDSchema = {
     type: 'object',
     required: ['id'],
     properties: {
-      id: _idSchema
+      id: watchSchema.properties._id
     }
   },
   response: {
@@ -45,14 +38,14 @@ const updateWatchTargetsSchema = {
     type: 'object',
     required: ['id'],
     properties: {
-      id: _idSchema
+      id: watchSchema.properties._id
     }
   },
   body: {
-    type: targetsSchema.type,
+    type: watchSchema.properties.targets.type,
     items: {
       required: ['_id', 'name', 'cssSelector', 'type', 'data'],
-      properties: targetsSchema.items.properties
+      properties: watchSchema.properties.targets.items.properties
     }
   }
 }
@@ -62,7 +55,7 @@ const updateWatchStatusSchema = {
     type: 'object',
     required: ['id', 'newStatus'],
     properties: {
-      id: _idSchema,
+      id: watchSchema.properties._id,
       newStatus: {
         type: 'string',
         enum: ['active', 'inactive'],
@@ -78,7 +71,7 @@ const getWatchsByUserIDSchema = {
     type: 'object',
     required: ['userID'],
     properties: {
-      userID: userIDSchema
+      userID: watchSchema.properties.userID
     }
   },
   response: {

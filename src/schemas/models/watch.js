@@ -104,15 +104,7 @@ const checkedAtSchema = {
 const watchSchema = {
   bsonType: 'object',
   type: 'object',
-  required: [
-    '_id',
-    'userID',
-    'url',
-    'interval',
-    'targets',
-    'active',
-    'createdAt'
-  ],
+  required: ['_id', 'userID', 'url', 'interval', 'targets', 'active', 'createdAt'],
   properties: {
     _id: _idSchema,
     userID: userIDSchema,
@@ -126,11 +118,4 @@ const watchSchema = {
   }
 }
 
-module.exports = { 
-  _idSchema,
-  userIDSchema,
-  urlSchema,
-  intervalSchema,
-  targetsSchema,
-  watchSchema
-}
+module.exports = watchSchema
