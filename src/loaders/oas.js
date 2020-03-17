@@ -1,7 +1,5 @@
 const oas = require('fastify-oas')
 
-const { PORT } = process.env
-
 module.exports = async (server) => {
   server.register(oas, {
     exposeRoute: true,
@@ -15,10 +13,10 @@ module.exports = async (server) => {
       externalDocs: {
         url: 'https://github.com/night-watch-project/watch-manager',
         description: 'Github'
-      }
-    },
-    consumes: ['application/json'],
-    produces: ['application/json'],
-    servers: [{ url: `http://localhost:${PORT}` }]
+      },
+      consumes: ['application/json'],
+      produces: ['application/json'],
+      servers: [{ url: `http://localhost:${process.env.PORT}` }]
+    }
   })
 }
