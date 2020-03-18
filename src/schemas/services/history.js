@@ -3,9 +3,9 @@ const { historySchema } = require('../models')
 const getHistoryByTargetIDSchema = {
   params: {
     type: 'object',
-    required: ['targetID'],
+    required: ['id'],
     properties: {
-      targetID: historySchema.properties.targetID
+      id: historySchema.properties.targetID
     }
   },
   querystring: {

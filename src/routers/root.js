@@ -55,9 +55,9 @@ module.exports = async (server, opts) => {
     }
   )
 
-  server.get('/users/:userID', { schema: getWatchsByUserIDSchema }, async (req, res) => {
+  server.get('/users/:id', { schema: getWatchsByUserIDSchema }, async (req, res) => {
     try {
-      const result = await rootService.getWatchsByUserID(req.params.userID)
+      const result = await rootService.getWatchsByUserID(req.params.id)
       res.code(200).send(result)
     } catch (err) {
       req.log.error(err.message)

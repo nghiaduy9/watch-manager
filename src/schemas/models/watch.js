@@ -1,34 +1,35 @@
 const _idSchema = {
+  description: 'ID of watch',
   bsonType: 'objectId',
   type: 'string',
   minLength: 24,
-  maxLength: 24,
-  description: 'ID of watch'
+  maxLength: 24
 }
 
 const userIDSchema = {
+  description: "User's ID",
   bsonType: 'objectId',
   type: 'string',
   minLength: 24,
-  maxLength: 24,
-  description: 'ID of the user to whom this watch belongs'
+  maxLength: 24
 }
 
 const urlSchema = {
+  description: 'URL to crawl',
   bsonType: 'string',
   type: 'string',
-  format: 'uri',
-  description: 'URL to crawl'
+  format: 'uri'
 }
 
 const intervalSchema = {
+  description: 'Number of seconds between executions',
   bsonType: 'int',
   type: 'integer',
-  minimum: 300,
-  description: 'Number of seconds between executions'
+  minimum: 300
 }
 
 const targetsSchema = {
+  description: 'Array of target objects',
   bsonType: 'array',
   type: 'array',
   minItems: 1,
@@ -38,67 +39,66 @@ const targetsSchema = {
     required: ['_id', 'name', 'cssSelector', 'type'],
     properties: {
       _id: {
+        description: 'ID of target',
         bsonType: 'objectId',
-        type: 'string',
-        description: 'ID of target'
+        type: 'string'
       },
       name: {
+        description: 'Unique name',
         bsonType: 'string',
-        type: 'string',
-        description: 'Unique name'
+        type: 'string'
       },
       cssSelector: {
+        description: 'CSS selector',
         bsonType: 'string',
-        type: 'string',
-        description: 'CSS selector'
+        type: 'string'
       },
       type: {
+        description: 'Type of the data',
         bsonType: 'string',
         type: 'string',
-        enum: ['string'],
-        description: 'Type of the data'
+        enum: ['string']
       },
       data: {
+        description: 'Current value',
         bsonType: 'string',
-        type: 'string',
-        description: 'Current value'
+        type: 'string'
       },
       updatedAt: {
+        description: 'Time at which the data was last updated',
         bsonType: 'date',
         type: 'string',
-        format: 'date-time',
-        description: 'Time at which the data was last updated'
+        format: 'date-time'
       }
     }
-  },
-  description: 'Array of target objects'
+  }
 }
 
 const activeSchema = {
+  description: 'Being scheduled or not',
   bsonType: 'bool',
-  type: 'boolean',
-  description: 'Being scheduled or not'
+  type: 'boolean'
 }
 
 const createdAtSchema = {
+  description: 'Time at which this watch was created',
   bsonType: 'date',
   type: 'string',
-  format: 'date-time',
-  description: 'Time at which the user was created'
+  format: 'date-time'
 }
 
 const updatedAtSchema = {
+  description: 'Time at which this watch was last updated',
   bsonType: 'date',
   type: 'string',
-  format: 'date-time',
-  description: 'Time at which the data was last updated'
+  format: 'date-time'
 }
 
 const checkedAtSchema = {
+  description: 'Time at which the data was last checked',
   bsonType: 'date',
   type: 'string',
-  format: 'date-time',
-  description: 'Time at which the data was last checked'
+  format: 'date-time'
 }
 
 const watchSchema = {

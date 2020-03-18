@@ -10,7 +10,7 @@ const createWatchSchema = {
       interval: watchSchema.properties.interval,
       targets: {
         type: watchSchema.properties.targets.type,
-        minItems: 1,
+        minItems: watchSchema.properties.targets.minItems,
         items: {
           required: ['name', 'cssSelector', 'type'],
           properties: watchSchema.properties.targets.items.properties
@@ -69,9 +69,9 @@ const getWatchsByUserIDSchema = {
   params: {
     bsonType: 'object',
     type: 'object',
-    required: ['userID'],
+    required: ['id'],
     properties: {
-      userID: watchSchema.properties.userID
+      id: watchSchema.properties.userID
     }
   },
   response: {

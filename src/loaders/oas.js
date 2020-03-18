@@ -1,4 +1,5 @@
 const oas = require('fastify-oas')
+const { name, description, version } = require('../../package.json')
 
 module.exports = async (server) => {
   server.register(oas, {
@@ -6,9 +7,9 @@ module.exports = async (server) => {
     routePrefix: '/documentation',
     swagger: {
       info: {
-        title: 'watch-manager',
-        description: 'watch-manager API documentation',
-        version: '0.4.1'
+        title: name,
+        description,
+        version
       },
       externalDocs: {
         url: 'https://github.com/night-watch-project/watch-manager',
