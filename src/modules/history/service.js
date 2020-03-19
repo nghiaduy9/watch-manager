@@ -1,14 +1,12 @@
-const { ObjectID } = require('mongodb')
 const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
+const { ObjectID } = require('mongodb')
 
 module.exports = class HistoryService {
   constructor(mongol) {
-    this.historyColection = mongol
-      .collection('history')
-      .attachHook(createTimestampHook())
+    this.historyColection = mongol.collection('history').attachHook(createTimestampHook())
   }
 
-  async getHistoryByTargetID(id, limit, after, before) {
+  async getByTargetID(id, limit, after, before) {
     const targetID = new ObjectID(id)
     if (before === undefined) before = new Date()
     const result = await this.historyColection

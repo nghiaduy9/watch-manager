@@ -1,6 +1,7 @@
 const fastify = require('fastify')
-const { mongolLoader, oasLoader } = require('./loaders')
-const { rootRouter, historyRouter } = require('./routers')
+const loaders = require('./loaders')
+const historyModule = require('./modules/history')
+const watchModule = require('./modules/watch')
 
 const { NODE_ENV, PORT } = process.env
 
@@ -9,12 +10,12 @@ const server = fastify({ ignoreTrailingSlash: true, logger: { level: loggerLevel
 
 const main = async () => {
   try {
-    server.register(mongolLoader)
-    server.register(oasLoader)
-    server.register(rootRouter, (parent) => {
+    server.register(loaders.mongol)
+    server.register(loaders.oas)
+    server.register(historyModule.router, (parent) => {
       return { mongol: parent.mongol }
     })
-    server.register(historyRouter, (parent) => {
+    server.register(watchModule.router, (parent) => {
       return { mongol: parent.mongol }
     })
     await server.listen(PORT, '::') // listen to all IPv6 and IPv4 addresses

@@ -1,4 +1,4 @@
-const _idSchema = {
+const _id = {
   description: 'ID of watch',
   bsonType: 'objectId',
   type: 'string',
@@ -6,7 +6,7 @@ const _idSchema = {
   maxLength: 24
 }
 
-const userIDSchema = {
+const userID = {
   description: "User's ID",
   bsonType: 'objectId',
   type: 'string',
@@ -14,21 +14,21 @@ const userIDSchema = {
   maxLength: 24
 }
 
-const urlSchema = {
+const url = {
   description: 'URL to crawl',
   bsonType: 'string',
   type: 'string',
   format: 'uri'
 }
 
-const intervalSchema = {
+const interval = {
   description: 'Number of seconds between executions',
   bsonType: 'int',
   type: 'integer',
   minimum: 300
 }
 
-const targetsSchema = {
+const targets = {
   description: 'Array of target objects',
   bsonType: 'array',
   type: 'array',
@@ -74,48 +74,46 @@ const targetsSchema = {
   }
 }
 
-const activeSchema = {
+const active = {
   description: 'Being scheduled or not',
   bsonType: 'bool',
   type: 'boolean'
 }
 
-const createdAtSchema = {
-  description: 'Time at which this watch was created',
-  bsonType: 'date',
-  type: 'string',
-  format: 'date-time'
-}
-
-const updatedAtSchema = {
-  description: 'Time at which this watch was last updated',
-  bsonType: 'date',
-  type: 'string',
-  format: 'date-time'
-}
-
-const checkedAtSchema = {
+const checkedAt = {
   description: 'Time at which the data was last checked',
   bsonType: 'date',
   type: 'string',
   format: 'date-time'
 }
 
-const watchSchema = {
+const createdAt = {
+  description: 'Time at which this watch was created',
+  bsonType: 'date',
+  type: 'string',
+  format: 'date-time'
+}
+
+const updatedAt = {
+  description: 'Time at which this watch was last updated',
+  bsonType: 'date',
+  type: 'string',
+  format: 'date-time'
+}
+
+module.exports = {
   bsonType: 'object',
   type: 'object',
   required: ['_id', 'userID', 'url', 'interval', 'targets', 'active', 'createdAt'],
   properties: {
-    _id: _idSchema,
-    userID: userIDSchema,
-    url: urlSchema,
-    interval: intervalSchema,
-    targets: targetsSchema,
-    active: activeSchema,
-    createdAt: createdAtSchema,
-    updatedAt: updatedAtSchema,
-    checkedAt: checkedAtSchema
+    _id,
+    userID,
+    url,
+    interval,
+    targets,
+    active,
+    checkedAt,
+    createdAt,
+    updatedAt
   }
 }
-
-module.exports = watchSchema

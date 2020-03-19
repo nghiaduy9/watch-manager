@@ -1,4 +1,4 @@
-const mongolLoader = require('./mongol')
-const oasLoader = require('./oas')
+const mongol = require('./mongol')
+const oas = require('./oas')
 
-module.exports = { mongolLoader, oasLoader }
+module.exports = { mongol, oas }

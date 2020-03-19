@@ -1,20 +1,18 @@
+const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
 const axios = require('axios')
 const { ObjectID } = require('mongodb')
-const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
 
 const { GATEWAY_ADDRESS } = process.env
 
-module.exports = class RootService {
+module.exports = class WatchService {
   constructor(mongol) {
-    this.watchCollection = mongol
-      .collection('watches')
-      .attachHook(createTimestampHook())
+    this.watchCollection = mongol.collection('watches').attachHook(createTimestampHook())
     this.historyCollection = mongol
       .collection('history')
       .attachHook(createTimestampHook())
   }
 
-  async createWatch(data) {
+  async create(data) {
     const { userID, url, interval, targets } = data
     const newTargets = targets.map((target) => {
       target._id = new ObjectID()
@@ -38,13 +36,13 @@ module.exports = class RootService {
       throw new Error('Unable to add this watch to the scheduler')
   }
 
-  async getWatchByID(id) {
+  async getByID(id) {
     const _id = new ObjectID(id)
     const result = await this.watchCollection.findOne({ _id })
     return result
   }
 
-  async updateWatchTargets(id, updatedTargets) {
+  async updateTargets(id, updatedTargets) {
     const _id = new ObjectID(id)
     let { targets } = await this.watchCollection.findOne({ _id })
 
@@ -69,7 +67,7 @@ module.exports = class RootService {
     this.watchCollection.updateOne({ _id }, { $set: { targets, checkedAt: new Date() } })
   }
 
-  async updateWatchStatus(id, newStatus) {
+  async updateStatus(id, newStatus) {
     const _id = new ObjectID(id)
     if (newStatus === 'inactive') {
       axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
@@ -89,7 +87,7 @@ module.exports = class RootService {
     }
   }
 
-  async getWatchsByUserID(id) {
+  async getByUserID(id) {
     const userID = new ObjectID(id)
     const result = await this.watchCollection.find({ userID }).toArray()
     return result
