@@ -1,5 +1,7 @@
+const historyModel = require('../../models/history')
 const watchModel = require('../../models/watch')
 
+const history = historyModel.schema
 const watch = watchModel.schema
 
 const aggregatedWatch = {
@@ -12,13 +14,8 @@ const aggregatedWatch = {
         ...watch.properties.targets.items,
         properties: {
           ...watch.properties.targets.items.properties,
-          data: {
-            type: 'string'
-          },
-          updatedAt: {
-            type: 'string',
-            format: 'date-time'
-          },
+          data: history.properties.data,
+          updatedAt: history.properties.createdAt
         }
       }
     }
@@ -43,6 +40,9 @@ module.exports = {
           }
         }
       }
+    },
+    response: {
+      200: aggregatedWatch
     }
   },
   getByID: {
@@ -55,6 +55,45 @@ module.exports = {
     },
     response: {
       200: aggregatedWatch
+    }
+  },
+  updateCheckedAt: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: watch.properties._id
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          checkedAt: watch.properties.checkedAt
+        }
+      }
+    }
+  },
+  updateStatus: {
+    params: {
+      type: 'object',
+      required: ['id', 'newStatus'],
+      properties: {
+        id: watch.properties._id,
+        newStatus: {
+          type: 'string',
+          enum: ['active', 'inactive'],
+          description: 'Either "active" or "inactive"'
+        }
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          active: watch.properties.active
+        }
+      }
     }
   },
   updateTargetData: {
@@ -73,29 +112,9 @@ module.exports = {
           type: 'string'
         }
       }
-    }
-  },
-  updateCheckedAt: {
-    params: {
-      type: 'object',
-      required: ['id'],
-      properties: {
-        id: watch.properties._id
-      }
-    }
-  },
-  updateStatus: {
-    params: {
-      type: 'object',
-      required: ['id', 'newStatus'],
-      properties: {
-        id: watch.properties._id,
-        newStatus: {
-          type: 'string',
-          enum: ['active', 'inactive'],
-          description: 'Either "active" or "inactive"'
-        }
-      }
+    },
+    response: {
+      200: aggregatedWatch
     }
   },
   getByUserID: {
