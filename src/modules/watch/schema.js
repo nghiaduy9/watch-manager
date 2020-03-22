@@ -2,6 +2,29 @@ const watchModel = require('../../models/watch')
 
 const watch = watchModel.schema
 
+const aggregatedWatch = {
+  ...watch,
+  properties: {
+    ...watch.properties,
+    targets: {
+      ...watch.properties.targets,
+      items: {
+        ...watch.properties.targets.items,
+        properties: {
+          ...watch.properties.targets.items.properties,
+          data: {
+            type: 'string'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time'
+          },
+        }
+      }
+    }
+  }
+}
+
 module.exports = {
   create: {
     body: {
@@ -31,10 +54,10 @@ module.exports = {
       }
     },
     response: {
-      200: watch
+      200: aggregatedWatch
     }
   },
-  updateTargets: {
+  updateTargetData: {
     params: {
       type: 'object',
       required: ['id'],
@@ -43,10 +66,21 @@ module.exports = {
       }
     },
     body: {
-      type: watch.properties.targets.type,
-      items: {
-        required: ['_id', 'name', 'cssSelector', 'type', 'data'],
-        properties: watch.properties.targets.items.properties
+      type: 'object',
+      required: ['data'],
+      properties: {
+        data: {
+          type: 'string'
+        }
+      }
+    }
+  },
+  updateCheckedAt: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: watch.properties._id
       }
     }
   },
@@ -76,7 +110,7 @@ module.exports = {
     response: {
       200: {
         type: 'array',
-        items: watch
+        items: aggregatedWatch
       }
     }
   }

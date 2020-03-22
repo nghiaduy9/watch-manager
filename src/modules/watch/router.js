@@ -25,9 +25,23 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.put('/:id/targets', { schema: schema.updateTargets }, async (req, res) => {
+  server.put(
+    '/targets/:id/data',
+    { schema: schema.updateTargetData },
+    async (req, res) => {
+      try {
+        await watchService.updateTargetData(req.params.id, req.body.data)
+        res.code(204).send()
+      } catch (err) {
+        req.log.error(err.message)
+        res.code(500).send()
+      }
+    }
+  )
+
+  server.put('/:id/checkedAt', { schema: schema.updateCheckedAt }, async (req, res) => {
     try {
-      await watchService.updateTargets(req.params.id, req.body)
+      await watchService.updateCheckedAt(req.params.id)
       res.code(204).send()
     } catch (err) {
       req.log.error(err.message)

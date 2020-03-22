@@ -38,33 +38,35 @@ module.exports = class WatchService {
 
   async getByID(id) {
     const _id = new ObjectID(id)
-    const result = await this.watchCollection.findOne({ _id })
-    return result
+    const watch = await this.watchCollection.findOne({ _id })
+    for (const target of watch.targets) {
+      const targetID = new ObjectID(target._id)
+      const history = await this.historyCollection.find({ targetID })
+        .sort({ createdAt: -1 })
+        .limit(1)
+        .toArray()
+      if (history.length !== 0) {
+        target.data = history[0].data
+        target.updatedAt = history[0].createdAt
+      }
+    }
+    return watch
   }
 
-  async updateTargets(id, updatedTargets) {
+  async updateTargetData(id, data) {
     const _id = new ObjectID(id)
-    let { targets } = await this.watchCollection.findOne({ _id })
-
-    targets = targets.map((target) => {
-      let newTarget = target
-      for (const updatedTarget of updatedTargets) {
-        updatedTarget._id = new ObjectID(updatedTarget._id)
-        if (target._id.equals(updatedTarget._id)) {
-          newTarget = updatedTarget
-          newTarget.updatedAt = new Date()
-          this.historyCollection.insertOne({
-            watchID: _id,
-            targetID: target._id,
-            data: updatedTarget.data
-          })
-          break
-        }
-      }
-      return newTarget
+    const watch = await this.watchCollection.findOne({ targets: { $elemMatch: { _id } } })
+    this.historyCollection.insertOne({
+      watchID: watch._id,
+      targetID: _id,
+      data
     })
+    this.updateCheckedAt(watch._id)
+  }
 
-    this.watchCollection.updateOne({ _id }, { $set: { targets, checkedAt: new Date() } })
+  async updateCheckedAt(id) {
+    const _id = new ObjectID(id)
+    await this.watchCollection.updateOne({ _id }, { $set: { checkedAt: new Date() } })
   }
 
   async updateStatus(id, newStatus) {
@@ -89,7 +91,20 @@ module.exports = class WatchService {
 
   async getByUserID(id) {
     const userID = new ObjectID(id)
-    const result = await this.watchCollection.find({ userID }).toArray()
-    return result
+    const watchs = await this.watchCollection.find({ userID }).toArray()
+    for (const watch of watchs) {
+      for (const target of watch.targets) {
+        const targetID = new ObjectID(target._id)
+        const history = await this.historyCollection.find({ targetID })
+          .sort({ createdAt: -1 })
+          .limit(1)
+          .toArray()
+        if (history.length !== 0) {
+          target.data = history[0].data
+          target.updatedAt = history[0].createdAt
+        }
+      }
+    }
+    return watchs
   }
 }

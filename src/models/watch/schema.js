@@ -58,17 +58,6 @@ const targets = {
         bsonType: 'string',
         type: 'string',
         enum: ['string']
-      },
-      data: {
-        description: 'Current value',
-        bsonType: 'string',
-        type: 'string'
-      },
-      updatedAt: {
-        description: 'Time at which the data was last updated',
-        bsonType: 'date',
-        type: 'string',
-        format: 'date-time'
       }
     }
   }
