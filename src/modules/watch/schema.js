@@ -101,7 +101,7 @@ module.exports = {
       type: 'object',
       required: ['id'],
       properties: {
-        id: watch.properties._id
+        id: watch.properties.targets.items.properties._id
       }
     },
     body: {
