@@ -12,6 +12,21 @@ module.exports = class WatchService {
       .attachHook(createTimestampHook())
   }
 
+  async aggregate(watch) {
+    for (const target of watch.targets) {
+      const history = await this.historyCollection
+        .find({ targetID: target._id })
+        .sort({ createdAt: -1 })
+        .limit(1)
+        .toArray()
+      if (history.length !== 0) {
+        target.data = history[0].data
+        target.updatedAt = history[0].createdAt
+      }
+    }
+    return watch
+  }
+
   async create(data) {
     const { userID, url, interval } = data
     let { targets } = data
@@ -35,12 +50,13 @@ module.exports = class WatchService {
       payload: { watchID: insertedId }
     })
 
-    return ops[0] // this should be aggregatedWatch, need to be fixed later
+    return this.aggregate(ops[0])
   }
 
   async getByID(id) {
     const _id = new ObjectID(id)
-    return this.watchCollection.findOne({ _id }) // this should be aggregatedWatch, need to be fixed later
+    const watch = await this.watchCollection.findOne({ _id })
+    return this.aggregate(watch)
   }
 
   async updateCheckedAt(id) {
@@ -89,11 +105,12 @@ module.exports = class WatchService {
       data
     })
     await this.updateCheckedAt(watch._id)
-    return watch // this should be aggregatedWatch, need to be fixed later
+    return this.aggregate(watch)
   }
 
   async getByUserID(id) {
     const userID = new ObjectID(id)
-    return this.watchCollection.find({ userID }).toArray() // this should be aggregatedWatches, need to be fixed later
+    const watches = await this.watchCollection.find({ userID }).toArray()
+    return Promise.all(watches.map((watch) => this.aggregate(watch)))
   }
 }
