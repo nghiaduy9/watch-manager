@@ -4,7 +4,7 @@
 
 ### Requirements
 
-- Node.js >= 12.0.0
+- Node.js >= 12
 
 ## DOCUMENTATION
 
