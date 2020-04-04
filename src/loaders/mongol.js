@@ -2,6 +2,7 @@ const { Mongol } = require('@albert-team/mongol')
 const fp = require('fastify-plugin')
 const historyModel = require('../models/history')
 const watchModel = require('../models/watch')
+const templateModel = require('../models/template')
 
 const { MONGODB_URI, MONGODB_DB_NAME } = process.env
 
@@ -15,5 +16,6 @@ module.exports = fp(async (server) => {
   }
   await mongol.setSchema('history', historyModel.schema, options)
   await mongol.setSchema('watches', watchModel.schema, options)
+  await mongol.setSchema('templates', templateModel.schema, options)
   server.decorate('mongol', mongol)
 })

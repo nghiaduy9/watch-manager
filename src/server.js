@@ -2,6 +2,7 @@ const fastify = require('fastify')
 const loaders = require('./loaders')
 const historyModule = require('./modules/history')
 const watchModule = require('./modules/watch')
+const templateModule = require('./modules/template')
 
 const { NODE_ENV, PORT } = process.env
 
@@ -16,6 +17,9 @@ const main = async () => {
       return { mongol: parent.mongol }
     })
     server.register(watchModule.router, (parent) => {
+      return { mongol: parent.mongol }
+    })
+    server.register(templateModule.router, (parent) => {
       return { mongol: parent.mongol }
     })
     await server.listen(PORT, '::') // listen to all IPv6 and IPv4 addresses
