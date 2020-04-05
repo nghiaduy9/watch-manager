@@ -9,12 +9,11 @@ module.exports = class TemplateService {
   }
 
   async create(data) {
-    const { name, urlPattern, version, targets } = data
+    const { name, urlPattern, targets } = data
     const { ops } = await this.templateCollection.insertOne({
       name,
       urlPattern,
-      version,
-      targets
+      targets,
     })
     return ops[0]
   }

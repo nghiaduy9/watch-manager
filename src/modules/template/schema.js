@@ -6,40 +6,39 @@ module.exports = {
   create: {
     body: {
       type: 'object',
-      required: ['name', 'urlPattern', 'version', 'targets'],
+      required: ['name', 'urlPattern', 'targets'],
       properties: {
         name: template.properties.name,
         urlPattern: template.properties.urlPattern,
-        version: template.properties.version,
         targets: {
           type: template.properties.targets.type,
           minItems: template.properties.targets.minItems,
           items: {
             required: ['name', 'cssSelector', 'type'],
-            properties: template.properties.targets.items.properties
-          }
-        }
-      }
+            properties: template.properties.targets.items.properties,
+          },
+        },
+      },
     },
     response: {
-      200: template
-    }
+      200: template,
+    },
   },
   get: {
     query: {
       type: 'object',
       properties: {
         url: {
-          type: "string",
-          format: "uri"
-        }
-      }
+          type: 'string',
+          format: 'uri',
+        },
+      },
     },
     response: {
       200: {
         type: 'array',
-        items: template
-      }
-    }
-  }
+        items: template,
+      },
+    },
+  },
 }

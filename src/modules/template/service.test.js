@@ -29,19 +29,18 @@ describe('test suite for TemplateService', () => {
       const mockTemplate = {
         name: 'test1',
         urlPattern: 'http://*.com',
-        version: 1,
         targets: [
           {
             name: 'name1',
             cssSelector: 'h1',
-            type: 'string'
+            type: 'string',
           },
           {
             name: 'name2',
             cssSelector: 'h2',
-            type: 'string'
-          }
-        ]
+            type: 'string',
+          },
+        ],
       }
       const template = await service.create(mockTemplate)
       expect(template._id).toBeDefined()
@@ -53,36 +52,36 @@ describe('test suite for TemplateService', () => {
     const mockTemplate1 = {
       name: 'test1',
       urlPattern: 'http://*.com',
-      version: 1,
       targets: [
         {
           name: 'name1',
           cssSelector: 'h1',
-          type: 'string'
+          type: 'string',
         },
         {
           name: 'name2',
           cssSelector: 'h2',
-          type: 'string'
-        }
-      ]
+          type: 'string',
+        },
+      ],
     }
 
     const mockTemplate2 = {
       name: 'test2',
       urlPattern: 'http://*.net',
-      version: 1,
       targets: [
         {
           name: 'name1',
           cssSelector: 'h1',
-          type: 'string'
-        }
-      ]
+          type: 'string',
+        },
+      ],
     }
 
     beforeEach(async () => {
-      const templateCollection = mongol.collection('templates').attachHook(createTimestampHook())
+      const templateCollection = mongol
+        .collection('templates')
+        .attachHook(createTimestampHook())
       await templateCollection.insertMany([mockTemplate1, mockTemplate2])
     })
 

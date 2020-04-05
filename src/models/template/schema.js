@@ -2,22 +2,17 @@ const _id = {
   bsonType: 'objectId',
   type: 'string',
   minLength: 24,
-  maxLength: 24
+  maxLength: 24,
 }
 
 const name = {
   bsonType: 'string',
-  type: 'string'
+  type: 'string',
 }
 
 const urlPattern = {
   bsonType: 'string',
-  type: 'string'
-}
-
-const version = {
-  bsonType: 'int',
-  type: 'integer'
+  type: 'string',
 }
 
 const targets = {
@@ -31,36 +26,36 @@ const targets = {
     properties: {
       name: {
         bsonType: 'string',
-        type: 'string'
+        type: 'string',
       },
       cssSelector: {
         bsonType: 'string',
-        type: 'string'
+        type: 'string',
       },
       type: {
         bsonType: 'string',
         type: 'string',
-        enum: ['string']
-      }
-    }
-  }
+        enum: ['string'],
+      },
+    },
+  },
 }
 
 const createdAt = {
   bsonType: 'date',
   type: 'string',
-  format: 'date-time'
+  format: 'date-time',
 }
 
 const updatedAt = {
   bsonType: 'date',
   type: 'string',
-  format: 'date-time'
+  format: 'date-time',
 }
 
 module.exports = {
   bsonType: 'object',
   type: 'object',
-  required: ['_id', 'name', 'urlPattern', 'version', 'targets', 'createdAt'],
-  properties: { _id, name, urlPattern, version, targets, createdAt, updatedAt }
+  required: ['_id', 'name', 'urlPattern', 'targets', 'createdAt'],
+  properties: { _id, name, urlPattern, targets, createdAt, updatedAt },
 }
