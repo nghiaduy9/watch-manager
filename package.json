@@ -2,13 +2,13 @@
   "private": true,
   "name": "@night-watch-project/watch-manager",
   "description": "Night Watch watch manager",
+  "version": "1.0.1",
   "author": "Night Watch Project",
   "license": "MIT",
   "repository": "github:night-watch-project/watch-manager",
   "engines": {
     "node": ">=12"
   },
-  "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
     "clean": "rm -r yarn.lock node_modules",
