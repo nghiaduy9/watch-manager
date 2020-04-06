@@ -15,11 +15,11 @@ const aggregatedWatch = {
         properties: {
           ...watch.properties.targets.items.properties,
           data: history.properties.data,
-          updatedAt: history.properties.createdAt
-        }
-      }
-    }
-  }
+          updatedAt: history.properties.createdAt,
+        },
+      },
+    },
+  },
 }
 
 module.exports = {
@@ -31,48 +31,49 @@ module.exports = {
         userID: watch.properties.userID,
         url: watch.properties.url,
         interval: watch.properties.interval,
+        templateID: watch.properties.templateID,
         targets: {
           type: watch.properties.targets.type,
           minItems: watch.properties.targets.minItems,
           items: {
             required: ['name', 'cssSelector', 'type'],
-            properties: watch.properties.targets.items.properties
-          }
-        }
-      }
+            properties: watch.properties.targets.items.properties,
+          },
+        },
+      },
     },
     response: {
-      200: aggregatedWatch
-    }
+      200: aggregatedWatch,
+    },
   },
   getByID: {
     params: {
       type: 'object',
       required: ['id'],
       properties: {
-        id: watch.properties._id
-      }
+        id: watch.properties._id,
+      },
     },
     response: {
-      200: aggregatedWatch
-    }
+      200: aggregatedWatch,
+    },
   },
   updateCheckedAt: {
     params: {
       type: 'object',
       required: ['id'],
       properties: {
-        id: watch.properties._id
-      }
+        id: watch.properties._id,
+      },
     },
     response: {
       200: {
         type: 'object',
         properties: {
-          checkedAt: watch.properties.checkedAt
-        }
-      }
-    }
+          checkedAt: watch.properties.checkedAt,
+        },
+      },
+    },
   },
   updateStatus: {
     params: {
@@ -83,39 +84,39 @@ module.exports = {
         newStatus: {
           type: 'string',
           enum: ['active', 'inactive'],
-          description: 'Either "active" or "inactive"'
-        }
-      }
+          description: 'Either "active" or "inactive"',
+        },
+      },
     },
     response: {
       200: {
         type: 'object',
         properties: {
-          active: watch.properties.active
-        }
-      }
-    }
+          active: watch.properties.active,
+        },
+      },
+    },
   },
   updateTargetData: {
     params: {
       type: 'object',
       required: ['id'],
       properties: {
-        id: watch.properties.targets.items.properties._id
-      }
+        id: watch.properties.targets.items.properties._id,
+      },
     },
     body: {
       type: 'object',
       required: ['data'],
       properties: {
         data: {
-          type: 'string'
-        }
-      }
+          type: 'string',
+        },
+      },
     },
     response: {
-      200: aggregatedWatch
-    }
+      200: aggregatedWatch,
+    },
   },
   getByUserID: {
     params: {
@@ -123,14 +124,14 @@ module.exports = {
       type: 'object',
       required: ['id'],
       properties: {
-        id: watch.properties.userID
-      }
+        id: watch.properties.userID,
+      },
     },
     response: {
       200: {
         type: 'array',
-        items: aggregatedWatch
-      }
-    }
-  }
+        items: aggregatedWatch,
+      },
+    },
+  },
 }

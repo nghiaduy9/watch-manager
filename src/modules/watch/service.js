@@ -28,10 +28,11 @@ module.exports = class WatchService {
   }
 
   async create(data) {
-    const { userID, url, interval } = data
+    const { userID, url, interval, templateID } = data
     let { targets } = data
     targets = targets.map((target) => {
       target._id = new ObjectID()
+      target.tid = target.tid ? new ObjectID(target.tid) : undefined
       return target
     })
 
@@ -40,14 +41,15 @@ module.exports = class WatchService {
       userID: new ObjectID(userID),
       url,
       interval,
+      templateID: templateID ? new ObjectID(templateID) : undefined,
       targets,
-      active: true
+      active: true,
     })
 
     // add this watch into the scheduler
     await axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
       interval,
-      payload: { watchID: insertedId }
+      payload: { watchID: insertedId },
     })
 
     return this.aggregate(ops[0])
@@ -73,7 +75,7 @@ module.exports = class WatchService {
     const _id = new ObjectID(id)
     if (newStatus === 'inactive') {
       await axios.delete(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
-        data: { payload: { watchID: _id } }
+        data: { payload: { watchID: _id } },
       })
       const watch = await this.watchCollection.findOneAndUpdate(
         { _id },
@@ -88,7 +90,7 @@ module.exports = class WatchService {
       const { interval } = watch
       await axios.post(`${GATEWAY_ADDRESS}/api/scheduler/watches`, {
         interval,
-        payload: { watchID: _id }
+        payload: { watchID: _id },
       })
       await this.watchCollection.updateOne({ _id }, { $set: { active: true } })
       return { active: true }
@@ -102,7 +104,7 @@ module.exports = class WatchService {
     await this.historyCollection.insertOne({
       watchID: watch._id,
       targetID: _id,
-      data
+      data,
     })
     await this.updateCheckedAt(watch._id)
     return this.aggregate(watch)

@@ -1,6 +1,7 @@
 const { Mongol } = require('@albert-team/mongol')
 const TemplateService = require('./service')
 const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
+const { ObjectID } = require("mongodb")
 
 // MONGO_URL is just an ENV variable set by @shelf/jest-mongodb, not the actual one used in production
 const { MONGO_URL } = process.env
@@ -54,11 +55,13 @@ describe('test suite for TemplateService', () => {
       urlPattern: 'http://*.com',
       targets: [
         {
+          _id: new ObjectID(),
           name: 'name1',
           cssSelector: 'h1',
           type: 'string',
         },
         {
+          _id: new ObjectID(),
           name: 'name2',
           cssSelector: 'h2',
           type: 'string',
@@ -71,6 +74,7 @@ describe('test suite for TemplateService', () => {
       urlPattern: 'http://*.net',
       targets: [
         {
+          _id: new ObjectID(),
           name: 'name1',
           cssSelector: 'h1',
           type: 'string',

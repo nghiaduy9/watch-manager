@@ -28,6 +28,14 @@ const interval = {
   minimum: 300
 }
 
+const templateID = {
+  description: 'ID of template',
+  bsonType: ['objectId', 'null'],
+  type: ['string', 'null'],
+  minLength: 24,
+  maxLength: 24
+}
+
 const targets = {
   description: 'Array of target objects',
   bsonType: 'array',
@@ -42,6 +50,10 @@ const targets = {
         description: 'ID of target',
         bsonType: 'objectId',
         type: 'string'
+      },
+      tid: {
+        bsonType: ['objectId', 'null'],
+        type: ['string', 'null'],
       },
       name: {
         description: 'Unique name',
@@ -99,6 +111,7 @@ module.exports = {
     userID,
     url,
     interval,
+    templateID,
     targets,
     active,
     checkedAt,

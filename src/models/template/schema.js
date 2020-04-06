@@ -22,8 +22,12 @@ const targets = {
   items: {
     bsonType: 'object',
     type: 'object',
-    required: ['name', 'cssSelector', 'type'],
+    required: ['_id', 'name', 'cssSelector', 'type'],
     properties: {
+      _id: {
+        bsonType: 'objectId',
+        type: 'string',
+      },
       name: {
         bsonType: 'string',
         type: 'string',

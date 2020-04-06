@@ -1,5 +1,6 @@
 const { createTimestampHook } = require('@albert-team/mongol/builtins/hooks')
 const picomatch = require('picomatch')
+const { ObjectID } = require('mongodb')
 
 module.exports = class TemplateService {
   constructor(mongol) {
@@ -9,7 +10,12 @@ module.exports = class TemplateService {
   }
 
   async create(data) {
-    const { name, urlPattern, targets } = data
+    const { name, urlPattern } = data
+    let { targets } = data
+    targets = targets.map((target) => {
+      target._id = new ObjectID()
+      return target
+    })
     const { ops } = await this.templateCollection.insertOne({
       name,
       urlPattern,
