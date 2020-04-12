@@ -12,7 +12,7 @@ describe('test suite for WatchService', () => {
   let db
   let service
   let watch
-  const objectID = new ObjectID()
+  const userID = new ObjectID()
 
   beforeAll(async () => {
     await mongol.connect()
@@ -20,8 +20,8 @@ describe('test suite for WatchService', () => {
   })
 
   beforeEach(async () => {
-    const mockWatch = {
-      userID: objectID,
+    const mockWatch1 = {
+      userID: userID,
       url: 'http://abc.com',
       interval: 1000,
       targets: [
@@ -38,8 +38,8 @@ describe('test suite for WatchService', () => {
       ],
     }
 
-    const mockWatch1 = {
-      userID: objectID,
+    const mockWatch2 = {
+      userID: userID,
       url: 'http://def.com.vn',
       interval: 1000,
       targets: [
@@ -59,8 +59,8 @@ describe('test suite for WatchService', () => {
     await db.dropDatabase()
     service = new WatchService(mongol)
     const watchCollection = mongol.collection('watches').attachHook(createTimestampHook())
-    const { ops } = await watchCollection.insertOne(mockWatch)
-    await watchCollection.insertOne(mockWatch1)
+    const { ops } = await watchCollection.insertOne(mockWatch1)
+    await watchCollection.insertOne(mockWatch2)
     watch = ops[0]
   })
 
@@ -77,10 +77,11 @@ describe('test suite for WatchService', () => {
 
   describe('test suite for WatchService.getByUserID()', () => {
     test('get watches by userID', async () => {
-      const watchesResponse = await service.getByUserID(objectID)
+      const watchesResponse = await service.getByUserID(userID)
       watchesResponse.map((watchResponse) => {
         expect(watchResponse.userID).toStrictEqual(watch.userID)
       })
+      expect(watchesResponse.length).toStrictEqual(2)
     })
   })
 
